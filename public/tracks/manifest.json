@@ -1,0 +1,20 @@
+[
+  {
+    "id": "chill-vibes",
+    "title": "Chill Vibes",
+    "artist": "Lo-Fi Beats",
+    "audio": "/tracks/chill-vibes/audio.mp3",
+    "cover": "/tracks/chill-vibes/cover.jpg",
+    "lrc": "/tracks/chill-vibes/lyrics.lrc",
+    "txt": null
+  },
+  {
+    "id": "midnight-drive",
+    "title": "Midnight Drive",
+    "artist": "Synthwave Dreams",
+    "audio": "/tracks/midnight-drive/audio.mp3",
+    "cover": "/tracks/midnight-drive/cover.jpg",
+    "lrc": null,
+    "txt": "/tracks/midnight-drive/lyrics.txt"
+  }
+]
