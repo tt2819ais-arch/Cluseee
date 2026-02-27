@@ -1,0 +1,45 @@
+.wrapper {
+  padding: 0 4px;
+}
+
+.barContainer {
+  position: relative;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.trackBg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.trackFill {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+.slider {
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  height: 20px;
+  margin: 0;
+}
+
+.times {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #666666;
+  padding-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
