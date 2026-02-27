@@ -11,7 +11,7 @@ export default function Controls({ isPlaying, onTogglePlay, onPrev, onNext }) {
         whileTap={{ scale: 0.9 }}
         aria-label="Предыдущий трек"
       >
-        ⏮
+        ◀◀
       </motion.button>
 
       <motion.button
@@ -31,7 +31,7 @@ export default function Controls({ isPlaying, onTogglePlay, onPrev, onNext }) {
         whileTap={{ scale: 0.9 }}
         aria-label="Следующий трек"
       >
-        ⏭
+        ▶▶
       </motion.button>
     </div>
   );
