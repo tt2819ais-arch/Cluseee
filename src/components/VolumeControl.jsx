@@ -10,9 +10,9 @@ export default function VolumeControl({ volume, onVolumeChange }) {
   );
 
   const getIcon = () => {
-    if (volume === 0) return '🔇';
-    if (volume < 0.35) return '🔈';
-    if (volume < 0.7) return '🔉';
+    if (volume === 0) return '✕';
+    if (volume < 0.35) return '';
+    if (volume < 0.7) return '';
     return '🔊';
   };
 
