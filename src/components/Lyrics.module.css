@@ -1,0 +1,62 @@
+.wrapper {
+  margin-top: 20px;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #0d0d0d;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.container {
+  padding: 28px 24px;
+  max-height: 280px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.line {
+  font-size: 15px;
+  line-height: 1.9;
+  color: #555555;
+  transition: all 0.3s ease;
+  padding: 2px 0;
+  font-weight: 400;
+}
+
+.activeLine {
+  color: #ffffff;
+  font-weight: 450;
+  transform: translateX(6px);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+}
+
+.staticText {
+  color: #888888;
+}
+
+.staticText .line {
+  color: #888888;
+}
+
+.placeholder {
+  color: #444444;
+  font-size: 14px;
+  text-align: center;
+  padding: 40px 0;
+  font-style: italic;
+}
+
+@media (max-width: 600px) {
+  .wrapper {
+    border-radius: 16px;
+  }
+
+  .container {
+    padding: 20px 16px;
+    max-height: 220px;
+  }
+
+  .line {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+}
