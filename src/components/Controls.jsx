@@ -21,7 +21,7 @@ export default function Controls({ isPlaying, onTogglePlay, onPrev, onNext }) {
         whileTap={{ scale: 0.92 }}
         aria-label={isPlaying ? 'Пауза' : 'Воспроизвести'}
       >
-        {isPlaying ? '⏸' : '▶'}
+        {isPlaying ? '||' : '▶'}
       </motion.button>
 
       <motion.button
