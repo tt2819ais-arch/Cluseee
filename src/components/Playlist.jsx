@@ -1,19 +1,16 @@
-import { motion } from 'framer-motion';
 import TrackCard from './TrackCard';
 import styles from './Playlist.module.css';
 
 export default function Playlist({ tracks, currentTrackIndex, onSelectTrack }) {
   return (
-    <div className={styles.playlist}>
-      <p className={styles.heading}>Треки</p>
-      <div className={styles.list}>
-        {tracks.map((track, index) => (
+    <div className={styles.list}>
+      <p className={styles.label}>Треки</p>
+      <div className={styles.items}>
+        {tracks.map((t, i) => (
           <TrackCard
-            key={track.id}
-            track={track}
-            index={index}
-            isActive={index === currentTrackIndex}
-            onClick={() => onSelectTrack(index)}
+            key={t.id} track={t} index={i}
+            isActive={i === currentTrackIndex}
+            onClick={() => onSelectTrack(i)}
           />
         ))}
       </div>
