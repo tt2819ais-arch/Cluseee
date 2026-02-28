@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { parseLRC } from '../utils/lrcParser';
 import styles from './Lyrics.module.css';
@@ -8,8 +8,6 @@ export default function Lyrics({ track, currentTime }) {
   const [staticText, setStaticText] = useState('');
   const [isLrc, setIsLrc] = useState(false);
   const [loading, setLoading] = useState(true);
-  const containerRef = useRef(null);
-  const activeLineRef = useRef(null);
 
   useEffect(() => {
     setLoading(true);
@@ -17,7 +15,7 @@ export default function Lyrics({ track, currentTime }) {
     setStaticText('');
     setIsLrc(false);
 
-    const loadLyrics = async () => {
+    const load = async () => {
       if (track.lrc) {
         try {
           const res = await fetch(track.lrc);
@@ -31,29 +29,26 @@ export default function Lyrics({ track, currentTime }) {
               return;
             }
           }
-        } catch (e) { /* fallthrough */ }
+        } catch {}
       }
 
       if (track.txt) {
         try {
           const res = await fetch(track.txt);
           if (res.ok) {
-            const text = await res.text();
-            setStaticText(text);
+            setStaticText(await res.text());
             setLoading(false);
             return;
           }
-        } catch (e) { /* fallthrough */ }
+        } catch {}
       }
 
-      setStaticText('');
       setLoading(false);
     };
 
-    loadLyrics();
+    load();
   }, [track]);
 
-  // Find active line index
   let activeIndex = -1;
   if (isLrc && lrcLines.length > 0) {
     for (let i = lrcLines.length - 1; i >= 0; i--) {
@@ -64,64 +59,69 @@ export default function Lyrics({ track, currentTime }) {
     }
   }
 
-  // Auto-scroll to active line
-  useEffect(() => {
-    if (activeLineRef.current && containerRef.current) {
-      const container = containerRef.current;
-      const line = activeLineRef.current;
-      const containerRect = container.getBoundingClientRect();
-      const lineRect = line.getBoundingClientRect();
-      const offset =
-        lineRect.top - containerRect.top - containerRect.height / 2 + lineRect.height / 2;
+  // Караоке-режим: только текущая строка
+  if (isLrc && lrcLines.length > 0) {
+    return (
+      <div className={styles.wrapper}>
+        <AnimatePresence mode="wait">
+          {activeIndex >= 0 ? (
+            <motion.div
+              key={activeIndex}
+              className={styles.karaoke}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              {activeIndex > 0 && (
+                <p className={styles.prevLine}>
+                  {lrcLines[activeIndex - 1].text}
+                </p>
+              )}
+              <p className={styles.activeLine}>
+                {lrcLines[activeIndex].text}
+              </p>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="waiting"
+              className={styles.waiting}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.3 }}
+              exit={{ opacity: 0 }}
+            >
+              ♪♪♪
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  }
 
-      container.scrollTo({
-        top: container.scrollTop + offset,
-        behavior: 'smooth'
-      });
-    }
-  }, [activeIndex]);
+  // Статический текст
+  if (staticText) {
+    return (
+      <div className={styles.wrapper}>
+        <div className={styles.staticWrap}>
+          {staticText.split('\n').map((line, i) => (
+            <p key={i} className={styles.staticLine}>{line || '\u00A0'}</p>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className={styles.wrapper}>
+        <p className={styles.noLyrics}>Загрузка...</p>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.wrapper}>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={track.id}
-          className={styles.container}
-          ref={containerRef}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          {loading && (
-            <p className={styles.placeholder}>Загрузка текста...</p>
-          )}
-
-          {!loading && isLrc && lrcLines.map((line, idx) => (
-            <p
-              key={idx}
-              ref={idx === activeIndex ? activeLineRef : null}
-              className={`${styles.line} ${idx === activeIndex ? styles.activeLine : ''}`}
-            >
-              {line.text}
-            </p>
-          ))}
-
-          {!loading && !isLrc && staticText && (
-            <div className={styles.staticText}>
-              {staticText.split('\n').map((line, idx) => (
-                <p key={idx} className={styles.line}>
-                  {line || '\u00A0'}
-                </p>
-              ))}
-            </div>
-          )}
-
-          {!loading && !isLrc && !staticText && (
-            <p className={styles.placeholder}>Текст песни недоступен</p>
-          )}
-        </motion.div>
-      </AnimatePresence>
+      <p className={styles.noLyrics}>♪</p>
     </div>
   );
 }
