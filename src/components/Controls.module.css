@@ -1,55 +1,42 @@
-.controls {
+.row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  padding: 8px 0;
+  gap: 16px;
+  padding: 4px 0;
 }
 
 .btn {
   background: rgba(255, 255, 255, 0.06);
   border: none;
-  color: #ffffff;
-  width: 48px;
-  height: 48px;
+  color: #fff;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 13px;
-  letter-spacing: -2px;
+  font-size: 11px;
   font-weight: 700;
-  transition: background 0.2s ease;
   font-family: inherit;
+  letter-spacing: -2px;
+  transition: background 0.2s;
 }
 
-.btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
+.btn:active { background: rgba(255,255,255,0.12); }
 
-.playBtn {
-  width: 60px;
-  height: 60px;
-  font-size: 18px;
+.play {
+  width: 52px;
+  height: 52px;
+  font-size: 16px;
   letter-spacing: -1px;
   background: rgba(255, 255, 255, 0.1);
 }
 
-.playBtn:hover {
-  background: rgba(255, 255, 255, 0.16);
-}
+.play:active { background: rgba(255,255,255,0.18); }
 
 @media (max-width: 600px) {
-  .btn {
-    width: 52px;
-    height: 52px;
-    font-size: 14px;
-  }
-
-  .playBtn {
-    width: 64px;
-    height: 64px;
-    font-size: 20px;
-  }
+  .btn { width: 48px; height: 48px; font-size: 12px; }
+  .play { width: 56px; height: 56px; font-size: 18px; }
 }
