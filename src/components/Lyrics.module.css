@@ -1,62 +1,83 @@
 .wrapper {
-  margin-top: 20px;
-  border-radius: 22px;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 12px;
+  margin: 16px 0 8px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
   overflow: hidden;
-  background: #0d0d0d;
-  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.container {
-  padding: 28px 24px;
-  max-height: 280px;
-  overflow-y: auto;
-  scroll-behavior: smooth;
+.karaoke {
+  text-align: center;
+  width: 100%;
+  padding: 0 8px;
 }
 
-.line {
-  font-size: 15px;
-  line-height: 1.9;
-  color: #555555;
-  transition: all 0.3s ease;
-  padding: 2px 0;
+.prevLine {
+  font-size: 14px;
   font-weight: 400;
+  color: rgba(255, 255, 255, 0.18);
+  margin-bottom: 10px;
+  line-height: 1.4;
+  transition: all 0.3s ease;
 }
 
 .activeLine {
+  font-size: 22px;
+  font-weight: 700;
   color: #ffffff;
-  font-weight: 450;
-  transform: translateX(6px);
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+  line-height: 1.35;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.12);
+  letter-spacing: -0.2px;
 }
 
-.staticText {
-  color: #888888;
-}
-
-.staticText .line {
-  color: #888888;
-}
-
-.placeholder {
-  color: #444444;
-  font-size: 14px;
+.waiting {
+  font-size: 28px;
+  color: rgba(255, 255, 255, 0.15);
   text-align: center;
-  padding: 40px 0;
-  font-style: italic;
+  letter-spacing: 8px;
+}
+
+.noLyrics {
+  font-size: 32px;
+  color: rgba(255, 255, 255, 0.08);
+  text-align: center;
+}
+
+.staticWrap {
+  max-height: 160px;
+  overflow-y: auto;
+  width: 100%;
+  padding: 0 8px;
+}
+
+.staticLine {
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  font-weight: 400;
 }
 
 @media (max-width: 600px) {
   .wrapper {
-    border-radius: 16px;
+    min-height: 100px;
+    padding: 16px 8px;
+    margin: 12px 0 4px;
   }
 
-  .container {
-    padding: 20px 16px;
-    max-height: 220px;
+  .activeLine {
+    font-size: 18px;
   }
 
-  .line {
-    font-size: 14px;
-    line-height: 1.8;
+  .prevLine {
+    font-size: 12px;
+  }
+
+  .staticWrap {
+    max-height: 120px;
   }
 }
