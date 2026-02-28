@@ -1,0 +1,48 @@
+.container {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.leaf {
+  position: absolute;
+  top: -40px;
+  animation: fall linear infinite;
+  will-change: transform, opacity;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-5vh) translateX(0) rotate(0deg) rotateY(0deg);
+    opacity: var(--leaf-opacity, 0.7);
+  }
+  25% {
+    transform: translateY(22vh) translateX(calc(var(--drift) * 0.4)) rotate(calc(var(--rot) * 0.25)) rotateY(180deg);
+  }
+  50% {
+    transform: translateY(45vh) translateX(calc(var(--drift) * 0.7)) rotate(calc(var(--rot) * 0.5)) rotateY(360deg);
+  }
+  75% {
+    transform: translateY(68vh) translateX(var(--drift)) rotate(calc(var(--rot) * 0.75)) rotateY(540deg);
+    opacity: var(--leaf-opacity, 0.5);
+  }
+  92% {
+    opacity: 0.2;
+    filter: blur(0px);
+  }
+  100% {
+    transform: translateY(98vh) translateX(var(--drift)) rotate(var(--rot)) rotateY(720deg) scale(0.2);
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
