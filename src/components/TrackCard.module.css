@@ -1,110 +1,58 @@
 .card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  border-radius: 12px;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 10px;
   cursor: pointer;
   position: relative;
-  transition: background 0.2s ease;
+  transition: background 0.2s;
 }
 
-.card:hover {
-  background: rgba(255, 255, 255, 0.04);
-}
+.card:active { background: rgba(255,255,255,0.06); }
+.on { background: rgba(255,255,255,0.05); }
 
-.active {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.activeLine {
+.line {
   position: absolute;
-  left: 0;
-  top: 50%;
+  left: 0; top: 50%;
   transform: translateY(-50%);
-  width: 3px;
-  height: 60%;
+  width: 2.5px; height: 55%;
   border-radius: 2px;
-  background: #ffffff;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  background: #fff;
 }
 
-.coverWrap {
-  position: relative;
-  width: 48px;
-  height: 48px;
+.thumb {
+  width: 36px; height: 36px;
   flex-shrink: 0;
-  border-radius: 8px;
+  border-radius: 7px;
   overflow: hidden;
 }
 
-.cover {
-  width: 100%;
-  height: 100%;
+.img {
+  width: 100%; height: 100%;
   object-fit: cover;
   display: block;
-}
-
-.playingIndicator {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-}
-
-.bar {
-  width: 3px;
-  height: 12px;
-  background: #fff;
-  border-radius: 1px;
-  animation: barPulse 0.8s ease-in-out infinite;
-}
-
-.bar:nth-child(2) {
-  animation-delay: 0.15s;
-  height: 16px;
-}
-
-.bar:nth-child(3) {
-  animation-delay: 0.3s;
-  height: 10px;
-}
-
-@keyframes barPulse {
-  0%, 100% {
-    transform: scaleY(0.5);
-  }
-  50% {
-    transform: scaleY(1);
-  }
 }
 
 .info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   min-width: 0;
 }
 
 .title {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
-  color: #ffffff;
+  color: #fff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.active .title {
-  color: #ffffff;
-}
-
 .artist {
-  font-size: 12px;
-  color: #888888;
+  font-size: 10px;
+  color: #666;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
