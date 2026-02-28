@@ -3,36 +3,26 @@ import styles from './Controls.module.css';
 
 export default function Controls({ isPlaying, onTogglePlay, onPrev, onNext }) {
   return (
-    <div className={styles.controls}>
+    <div className={styles.row}>
       <motion.button
         className={styles.btn}
         onClick={onPrev}
-        whileHover={{ scale: 1.12 }}
-        whileTap={{ scale: 0.88 }}
-        aria-label="Предыдущий"
-      >
-        ◀◀
-      </motion.button>
+        whileTap={{ scale: 0.85 }}
+      >◀◀</motion.button>
 
       <motion.button
-        className={`${styles.btn} ${styles.playBtn}`}
+        className={`${styles.btn} ${styles.play}`}
         onClick={onTogglePlay}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        aria-label={isPlaying ? 'Пауза' : 'Воспроизвести'}
+        whileTap={{ scale: 0.88 }}
       >
-        {isPlaying ? '||' : '▶'}
+        {isPlaying ? '| |' : '▶'}
       </motion.button>
 
       <motion.button
         className={styles.btn}
         onClick={onNext}
-        whileHover={{ scale: 1.12 }}
-        whileTap={{ scale: 0.88 }}
-        aria-label="Следующий"
-      >
-        ▶▶
-      </motion.button>
+        whileTap={{ scale: 0.85 }}
+      >▶▶</motion.button>
     </div>
   );
 }
