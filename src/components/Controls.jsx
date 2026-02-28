@@ -7,9 +7,9 @@ export default function Controls({ isPlaying, onTogglePlay, onPrev, onNext }) {
       <motion.button
         className={styles.btn}
         onClick={onPrev}
-        whileHover={{ scale: 1.1, backgroundColor: 'rgba(255,255,255,0.08)' }}
-        whileTap={{ scale: 0.9 }}
-        aria-label="Предыдущий трек"
+        whileHover={{ scale: 1.12 }}
+        whileTap={{ scale: 0.88 }}
+        aria-label="Предыдущий"
       >
         ◀◀
       </motion.button>
@@ -17,8 +17,8 @@ export default function Controls({ isPlaying, onTogglePlay, onPrev, onNext }) {
       <motion.button
         className={`${styles.btn} ${styles.playBtn}`}
         onClick={onTogglePlay}
-        whileHover={{ scale: 1.08, backgroundColor: 'rgba(255,255,255,0.15)' }}
-        whileTap={{ scale: 0.92 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
         aria-label={isPlaying ? 'Пауза' : 'Воспроизвести'}
       >
         {isPlaying ? '||' : '▶'}
@@ -27,9 +27,9 @@ export default function Controls({ isPlaying, onTogglePlay, onPrev, onNext }) {
       <motion.button
         className={styles.btn}
         onClick={onNext}
-        whileHover={{ scale: 1.1, backgroundColor: 'rgba(255,255,255,0.08)' }}
-        whileTap={{ scale: 0.9 }}
-        aria-label="Следующий трек"
+        whileHover={{ scale: 1.12 }}
+        whileTap={{ scale: 0.88 }}
+        aria-label="Следующий"
       >
         ▶▶
       </motion.button>
