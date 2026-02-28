@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import Background from './components/Background';
 import Header from './components/Header';
 import Player from './components/Player';
-import Playlist from './components/Playlist';
 import { useAudio } from './hooks/useAudio';
 import styles from './App.module.css';
 
-// Fallback demo tracks if manifest is not found
 const DEMO_TRACKS = [
   {
     id: 'demo-silence',
@@ -24,7 +23,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadManifest = async () => {
+    const load = async () => {
       try {
         const res = await fetch('/tracks/manifest.json');
         if (res.ok) {
@@ -37,13 +36,12 @@ export default function App() {
         } else {
           setTracks(DEMO_TRACKS);
         }
-      } catch (e) {
+      } catch {
         setTracks(DEMO_TRACKS);
       }
       setLoading(false);
     };
-
-    loadManifest();
+    load();
   }, []);
 
   const {
@@ -51,8 +49,6 @@ export default function App() {
     isPlaying,
     currentTime,
     duration,
-    volume,
-    setVolume,
     togglePlay,
     seekTo,
     nextTrack,
@@ -61,43 +57,46 @@ export default function App() {
   } = useAudio(tracks);
 
   const currentTrack = tracks[currentTrackIndex] || null;
+  const isDemoMode = tracks.length === 1 && tracks[0].id === 'demo-silence';
 
   if (loading) {
     return (
       <div className={styles.app}>
-        <Header />
-        <div className={styles.loading}>
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0.3, 1, 0.3] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          >
-            Загрузка...
-          </motion.span>
+        <Background />
+        <div className={styles.content}>
+          <Header />
+          <div className={styles.loading}>
+            <motion.span
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              Загрузка...
+            </motion.span>
+          </div>
         </div>
       </div>
     );
   }
 
-  const isDemoMode = tracks.length === 1 && tracks[0].id === 'demo-silence';
-
   return (
     <div className={styles.app}>
-      <Header />
+      <Background />
+      <div className={styles.content}>
+        <Header />
 
-      {isDemoMode ? (
-        <motion.div
-          className={styles.empty}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <div className={styles.emptyIcon}>♪</div>
-          <p className={styles.emptyText}>
-            Треки не найдены. Создайте папку с треком в <code>public/tracks/</code> и
-            сгенерируйте манифест:
-          </p>
-          <div className={styles.emptyCode}>
+        {isDemoMode ? (
+          <motion.div
+            className={styles.empty}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <div className={styles.emptyIcon}>♪</div>
+            <p className={styles.emptyText}>
+              Треки не найдены. Создайте папку с треком в{' '}
+              <code>public/tracks/</code> и сгенерируйте манифест:
+            </p>
+            <div className={styles.emptyCode}>
 {`public/tracks/
   ├── my-track/
   │   ├── audio.mp3
@@ -107,43 +106,26 @@ export default function App() {
   └── manifest.json
 
 npm run manifest`}
-          </div>
-        </motion.div>
-      ) : (
-        <motion.div
-          className={styles.layout}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.15 }}
-        >
-          <div className={styles.playlistCol}>
-            <Playlist
+            </div>
+          </motion.div>
+        ) : (
+          currentTrack && (
+            <Player
+              track={currentTrack}
               tracks={tracks}
               currentTrackIndex={currentTrackIndex}
+              isPlaying={isPlaying}
+              currentTime={currentTime}
+              duration={duration}
+              onTogglePlay={togglePlay}
+              onPrev={prevTrack}
+              onNext={nextTrack}
+              onSeek={seekTo}
               onSelectTrack={selectTrack}
             />
-          </div>
-          <div className={styles.playerCol}>
-            <AnimatePresence mode="wait">
-              {currentTrack && (
-                <Player
-                  key="player"
-                  track={currentTrack}
-                  isPlaying={isPlaying}
-                  currentTime={currentTime}
-                  duration={duration}
-                  volume={volume}
-                  onTogglePlay={togglePlay}
-                  onPrev={prevTrack}
-                  onNext={nextTrack}
-                  onSeek={seekTo}
-                  onVolumeChange={setVolume}
-                />
-              )}
-            </AnimatePresence>
-          </div>
-        </motion.div>
-      )}
+          )
+        )}
+      </div>
     </div>
   );
 }
