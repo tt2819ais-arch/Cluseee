@@ -4,124 +4,87 @@ import { parseLRC } from '../utils/lrcParser';
 import styles from './Lyrics.module.css';
 
 export default function Lyrics({ track, currentTime }) {
-  const [lrcLines, setLrcLines] = useState([]);
+  const [lines, setLines] = useState([]);
   const [staticText, setStaticText] = useState('');
   const [isLrc, setIsLrc] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    setLrcLines([]);
-    setStaticText('');
-    setIsLrc(false);
-
+    setLines([]); setStaticText(''); setIsLrc(false); setReady(false);
     const load = async () => {
       if (track.lrc) {
         try {
-          const res = await fetch(track.lrc);
-          if (res.ok) {
-            const text = await res.text();
-            const parsed = parseLRC(text);
-            if (parsed.length > 0) {
-              setLrcLines(parsed);
-              setIsLrc(true);
-              setLoading(false);
-              return;
-            }
+          const r = await fetch(track.lrc);
+          if (r.ok) {
+            const p = parseLRC(await r.text());
+            if (p.length) { setLines(p); setIsLrc(true); setReady(true); return; }
           }
         } catch {}
       }
-
       if (track.txt) {
         try {
-          const res = await fetch(track.txt);
-          if (res.ok) {
-            setStaticText(await res.text());
-            setLoading(false);
-            return;
-          }
+          const r = await fetch(track.txt);
+          if (r.ok) { setStaticText(await r.text()); setReady(true); return; }
         } catch {}
       }
-
-      setLoading(false);
+      setReady(true);
     };
-
     load();
   }, [track]);
 
-  let activeIndex = -1;
-  if (isLrc && lrcLines.length > 0) {
-    for (let i = lrcLines.length - 1; i >= 0; i--) {
-      if (currentTime >= lrcLines[i].time) {
-        activeIndex = i;
-        break;
-      }
+  let active = -1;
+  if (isLrc && lines.length) {
+    for (let i = lines.length - 1; i >= 0; i--) {
+      if (currentTime >= lines[i].time) { active = i; break; }
     }
   }
 
-  // Караоке-режим: только текущая строка
-  if (isLrc && lrcLines.length > 0) {
+  if (isLrc && lines.length) {
     return (
-      <div className={styles.wrapper}>
+      <div className={styles.box}>
         <AnimatePresence mode="wait">
-          {activeIndex >= 0 ? (
+          {active >= 0 ? (
             <motion.div
-              key={activeIndex}
+              key={active}
               className={styles.karaoke}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
             >
-              {activeIndex > 0 && (
-                <p className={styles.prevLine}>
-                  {lrcLines[activeIndex - 1].text}
-                </p>
+              {active > 0 && (
+                <p className={styles.prev}>{lines[active - 1].text}</p>
               )}
-              <p className={styles.activeLine}>
-                {lrcLines[activeIndex].text}
-              </p>
+              <p className={styles.active}>{lines[active].text}</p>
+              {active < lines.length - 1 && (
+                <p className={styles.next}>{lines[active + 1].text}</p>
+              )}
             </motion.div>
           ) : (
-            <motion.div
-              key="waiting"
-              className={styles.waiting}
+            <motion.p
+              key="wait"
+              className={styles.wait}
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.3 }}
+              animate={{ opacity: 0.25 }}
               exit={{ opacity: 0 }}
-            >
-              ♪♪♪
-            </motion.div>
+            >♪ ♪ ♪</motion.p>
           )}
         </AnimatePresence>
       </div>
     );
   }
 
-  // Статический текст
   if (staticText) {
     return (
-      <div className={styles.wrapper}>
+      <div className={styles.box}>
         <div className={styles.staticWrap}>
-          {staticText.split('\n').map((line, i) => (
-            <p key={i} className={styles.staticLine}>{line || '\u00A0'}</p>
+          {staticText.split('\n').map((l, i) => (
+            <p key={i} className={styles.staticLine}>{l || '\u00A0'}</p>
           ))}
         </div>
       </div>
     );
   }
 
-  if (loading) {
-    return (
-      <div className={styles.wrapper}>
-        <p className={styles.noLyrics}>Загрузка...</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className={styles.wrapper}>
-      <p className={styles.noLyrics}>♪</p>
-    </div>
-  );
+  return <div className={styles.box}><p className={styles.wait}>♪</p></div>;
 }
