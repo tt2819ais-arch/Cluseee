@@ -1,18 +1,16 @@
-.playlist {
-  padding: 0;
-}
+.list { padding: 0; }
 
-.heading {
-  font-size: 11px;
+.label {
+  font-size: 10px;
   font-weight: 600;
-  color: #555;
+  color: #444;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  padding: 0 8px 8px;
+  padding: 0 10px 6px;
 }
 
-.list {
-  max-height: 200px;
+.items {
+  max-height: 150px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -20,7 +18,5 @@
 }
 
 @media (max-width: 600px) {
-  .list {
-    max-height: 160px;
-  }
+  .items { max-height: 120px; }
 }
