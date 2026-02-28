@@ -1,45 +1,42 @@
-.wrapper {
-  padding: 0 4px;
-}
+.wrap { padding: 0 2px; }
 
-.barContainer {
+.bar {
   position: relative;
-  height: 20px;
+  height: 18px;
   display: flex;
   align-items: center;
 }
 
-.trackBg {
+.bg {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 0; right: 0;
   height: 3px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255,255,255,0.1);
   border-radius: 2px;
   overflow: hidden;
   pointer-events: none;
 }
 
-.trackFill {
+.fill {
   height: 100%;
-  background: #ffffff;
+  background: #fff;
   border-radius: 2px;
-  transition: width 0.1s linear;
+  transition: width 0.15s linear;
 }
 
-.slider {
+.input {
   width: 100%;
   position: relative;
   z-index: 2;
-  height: 20px;
+  height: 18px;
   margin: 0;
 }
 
 .times {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
-  color: #666666;
-  padding-top: 4px;
+  font-size: 10px;
+  color: #555;
+  padding-top: 2px;
   font-variant-numeric: tabular-nums;
 }
