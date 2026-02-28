@@ -2,8 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  padding: 16px 0 8px;
+  gap: 20px;
+  padding: 8px 0;
 }
 
 .btn {
@@ -17,32 +17,39 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 13px;
+  letter-spacing: -2px;
+  font-weight: 700;
   transition: background 0.2s ease;
+  font-family: inherit;
 }
 
-.playBtn {
-  width: 56px;
-  height: 56px;
-  font-size: 20px;
+.btn:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-.btn:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.3);
-  outline-offset: 2px;
+.playBtn {
+  width: 60px;
+  height: 60px;
+  font-size: 18px;
+  letter-spacing: -1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.playBtn:hover {
+  background: rgba(255, 255, 255, 0.16);
 }
 
 @media (max-width: 600px) {
   .btn {
     width: 52px;
     height: 52px;
-    font-size: 18px;
+    font-size: 14px;
   }
 
   .playBtn {
-    width: 60px;
-    height: 60px;
-    font-size: 22px;
+    width: 64px;
+    height: 64px;
+    font-size: 20px;
   }
 }
