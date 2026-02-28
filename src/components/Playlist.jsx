@@ -4,13 +4,8 @@ import styles from './Playlist.module.css';
 
 export default function Playlist({ tracks, currentTrackIndex, onSelectTrack }) {
   return (
-    <motion.div
-      className={styles.playlist}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
-    >
-      <h2 className={styles.heading}>Плейлист</h2>
+    <div className={styles.playlist}>
+      <p className={styles.heading}>Треки</p>
       <div className={styles.list}>
         {tracks.map((track, index) => (
           <TrackCard
@@ -22,6 +17,6 @@ export default function Playlist({ tracks, currentTrackIndex, onSelectTrack }) {
           />
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 }
