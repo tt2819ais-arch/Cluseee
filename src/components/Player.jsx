@@ -7,35 +7,27 @@ import Playlist from './Playlist';
 import styles from './Player.module.css';
 
 export default function Player({
-  track,
-  tracks,
-  currentTrackIndex,
-  isPlaying,
-  currentTime,
-  duration,
-  onTogglePlay,
-  onPrev,
-  onNext,
-  onSeek,
-  onSelectTrack
+  track, tracks, currentTrackIndex,
+  isPlaying, currentTime, duration,
+  onTogglePlay, onPrev, onNext, onSeek, onSelectTrack
 }) {
   return (
     <motion.div
       className={styles.player}
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.1 }}
+      transition={{ duration: 0.45, delay: 0.1 }}
     >
       <Cover track={track} isPlaying={isPlaying} />
 
       <AnimatePresence mode="wait">
         <motion.div
           key={track.id}
-          className={styles.trackInfo}
-          initial={{ opacity: 0, y: 10 }}
+          className={styles.meta}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.3 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.25 }}
         >
           <h1 className={styles.title}>{track.title}</h1>
           <p className={styles.artist}>{track.artist}</p>
@@ -57,7 +49,7 @@ export default function Player({
         onSeek={onSeek}
       />
 
-      <div className={styles.playlistSection}>
+      <div className={styles.bottom}>
         <Playlist
           tracks={tracks}
           currentTrackIndex={currentTrackIndex}
